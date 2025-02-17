@@ -4,14 +4,15 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Feather from '@expo/vector-icons/Feather';
 import images from '../assets/images/images';
 import React from 'react'
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
-import index from '.';
 
 export default function pantallaProducto() {
 
     const route = useRoute();
     const { item } = route.params;
+    const [enCarro, setEnCarro] = useState(0);
+    const navigation = useNavigation();
     const data = [
         { id: '1', imagen: images[item.imagen] },
         { id: '2', imagen: images[item.imagen] }
@@ -50,11 +51,21 @@ export default function pantallaProducto() {
             setCurrentIndex(viewableItems[0].index); // Obtiene el índice del primer elemento visible
         }
     }).current;
+
+
+    const anadirACotizacion = () => {
+        setEnCarro(enCarro + 1);
+        console.log(enCarro);
+    }
+    const quitarItem = () => {
+        setEnCarro(enCarro - 1);
+    }
+
     return (
         <SafeAreaView>
             <View className="bg-white text-xl h-screen">
                 <View className="relative z-10 bg-white h-28 items-center justify-end py-2">
-                    <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2'>
+                    <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2' onPress={() => navigation.navigate('pantallaCotizacion')}>
                         <Text className='text-right text-xl mr-1'>Ver lista</Text>
                         <Feather name="wind" size={24} color="black" />
                     </TouchableOpacity>
@@ -90,11 +101,25 @@ export default function pantallaProducto() {
                             <FontAwesome name="circle" size={24} color={`${currentIndex ? "#5e5e5e" : "#adadad"}`} className="w-1/12 " />
                         </View>
                         <View className='w-full items-center h-32 justify-center'>
-                            <TouchableOpacity className='w-7/12 bg-blue-500 p-3 rounded-full'>
-                                <Text className='text-center text-lg text-white font-semibold'>
-                                    Añadir a cotización
-                                </Text>
-                            </TouchableOpacity>
+                            {enCarro ?
+                                <View className='w-7/12 h-12 bg-blue-500 p-0 rounded-full flex flex-row justify-center items-center overflow-hidden'>
+                                    <TouchableOpacity className="w-3/12 h-full bg-red-500 items-center justify-center" onPress={quitarItem}>
+                                        <FontAwesome name="minus" size={20} color='white' />
+                                    </TouchableOpacity>
+                                    <View className='justify-center items-center w-6/12 bg-white h-full border-y-black border-y-2'>
+                                        <Text className='text-center text-lg text-black font-semibold bg-white w-full h-full py-2'>
+                                            {enCarro}
+                                        </Text>
+                                    </View>
+                                    <TouchableOpacity className="w-3/12 h-full bg-blue-500 items-center justify-center" onPress={anadirACotizacion}>
+                                        <FontAwesome name="plus" size={20} color='white' />
+                                    </TouchableOpacity>
+                                </View> :
+                                <TouchableOpacity className='w-7/12 h-12 bg-blue-500 p-3 rounded-full' onPress={anadirACotizacion}>
+                                    <Text className='text-center text-lg text-white font-semibold'>
+                                        Añadir a cotización
+                                    </Text>
+                                </TouchableOpacity>}
                         </View>
                         <View className='gap-3 px-5'>
                             <Text className='text-red-500 text-5xl'>
@@ -112,19 +137,6 @@ export default function pantallaProducto() {
                                 </View>
                             }
                         </View>
-
-                        {/*<PagerView className='flex-1 h-60' initialPage={0}>
-                            <View key="1">
-                                <Text>First page</Text>
-                                <Text>Swipe ➡️</Text>
-                            </View>
-                            <View key="2">
-                                <Text>Second page</Text>
-                            </View>
-                            <View key="3">
-                                <Text>Third page</Text>
-                            </View>
-                        </PagerView>*/}
                     </View>
                 </ScrollView>
 

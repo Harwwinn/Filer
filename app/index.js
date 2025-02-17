@@ -7,6 +7,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Feather from '@expo/vector-icons/Feather';
 import images from '../assets/images/images';
 import ContainerProducto from './components/containerProductoMainPage';
+import '../assets/carrito';
 
 const data = require('../assets/data.json');
 
@@ -17,7 +18,7 @@ export default function index() {
     <SafeAreaView>
       <View className="bg-white text-xl h-screen">
         <View className="relative z-10 bg-white h-28 items-center justify-end py-2">
-          <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2'>
+          <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2' onPress={() => navigation.navigate('pantallaCotizacion')}>
             <Text className='text-right text-xl mr-1'>Ver lista</Text>
             <Feather name="wind" size={24} color="black" />
           </TouchableOpacity>
