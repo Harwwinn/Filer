@@ -34,7 +34,7 @@ export default function pantallaFormularioCotizacion() {
                         <Text className='w-full text-slate-500 text-2xl leading-relaxed'>
                             Llene el siguiente formulario para que podamos comunicarnos con usted y realizar la cotización.
                         </Text>
-                        <View className='bg-amber-300 h-96 w-full rounded-3xl flex-col p-5 justify-evenly items-center'>
+                        <View className='bg-filer-blue h-96 w-full rounded-3xl flex-col p-5 justify-evenly items-center'>
                             <TextInput placeholder='Nombre' className="h-2/12 w-11/12 bg-white rounded-full p-3 px-5 text-xl"/>
                             <TextInput placeholder='Correo electronico' className="h-2/12 w-11/12 bg-white rounded-full p-3 px-5 text-xl"/>
                             <TextInput placeholder='Numero de telefono' className="h-2/12 w-11/12 bg-white rounded-full p-3 px-5 text-xl"/>

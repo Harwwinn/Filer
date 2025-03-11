@@ -80,8 +80,27 @@ export default function pantallaProducto() {
     }
     console.log(global.carrito);
   }
+
+
   const quitarItem = () => {
     setEnCarro(enCarro - 1);
+    //Se verifica si esta el producto en el carrito, sino entonces se anade
+    if (global.carrito.some((producto) => producto?.id == item.id)) {
+      //Se busca el prodcuto y se agrega 1 a la cantidad
+      global.carrito.find((producto, i) => {
+        if (producto.id == item.id) {
+          if (global.carrito[i].cantidad == 1){
+            global.carrito = global.carrito.filter((elemento, j) => j !== i);
+
+          }
+          else{
+            global.carrito[i].cantidad = global.carrito[i].cantidad - 1;
+          }
+          return true;
+        }
+      })
+    }
+    console.log(global.carrito);
   }
 
 

@@ -31,7 +31,7 @@ export default function pantallaCotizacion() {
                     <Text className=" w-full text-left text-5xl font">
                         Productos Seleccionados
                     </Text>
-                    <TouchableOpacity className="w-11/12 bg-amber-400 rounded-full p-2 mt-5" onPress={() => navigation.navigate('pantallaFormularioCotizacion')}>
+                    <TouchableOpacity className="w-11/12 bg-filer-blue rounded-full p-2 mt-5" onPress={() => navigation.navigate('pantallaFormularioCotizacion')}>
                         <Text className="text-center text-lg font-semibold text-slate-900">Solicitar Cotización ({global.carrito.length} Productos)</Text>
                     </TouchableOpacity>
                 </View>
@@ -45,11 +45,11 @@ export default function pantallaCotizacion() {
                                 <Text className="text-filer-grey font-semibold text-4xl ">AmAir 300X</Text>
                                 <View className="flex flex-row w-8/12 bg-white items-center justify-between rounded-full p-2">
                                     <TouchableOpacity>
-                                        <Text>12</Text>
+                                        <Text>-</Text>
                                     </TouchableOpacity>
                                     <Text>12</Text>
                                     <TouchableOpacity>
-                                        <Text>12</Text>
+                                        <Text>+</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <TouchableOpacity className="bg-white w-5/12 justify-center items-center p-1 mt-2 rounded-full">
