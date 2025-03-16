@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, FlatList, Image } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, FlatList, Image, Alert } from 'react-native'
 import { useState, useRef } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Feather from '@expo/vector-icons/Feather';
@@ -18,6 +18,15 @@ export default function pantallaCotizacion() {
         setEnCarro(enCarro - 1);
     }
 
+    const handleSolicitarCotizacion = () => {
+        if(global.carrito.length === 0){
+            Alert.alert("Error al solicitar cotizacion", "Debe agregar productos a su carrito antes de poder solicitar una cotización")
+        }
+        else{
+            navigation.navigate("pantallaFormularioCotizacion");
+        }
+    }
+
     return (
         <SafeAreaView>
             <View className="bg-white text-xl h-screen">
@@ -31,8 +40,8 @@ export default function pantallaCotizacion() {
                     <Text className=" w-full text-left text-5xl font">
                         Productos Seleccionados
                     </Text>
-                    <TouchableOpacity className="w-11/12 bg-filer-blue rounded-full p-2 mt-5" onPress={() => navigation.navigate('pantallaFormularioCotizacion')}>
-                        <Text className="text-center text-lg font-semibold text-slate-900">Solicitar Cotización ({global.carrito.length} Productos)</Text>
+                    <TouchableOpacity className="w-11/12 bg-filer-blue rounded-full p-2 mt-5" onPress={handleSolicitarCotizacion}>
+                        <Text className="text-center text-lg font-semibold text-white">Solicitar Cotización ({global.carrito.length} Productos)</Text>
                     </TouchableOpacity>
                 </View>
                 <ScrollView showsVerticalScrollIndicator={true}>

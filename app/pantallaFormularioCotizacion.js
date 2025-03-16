@@ -34,13 +34,14 @@ export default function pantallaFormularioCotizacion() {
                         <Text className='w-full text-slate-500 text-2xl leading-relaxed'>
                             Llene el siguiente formulario para que podamos comunicarnos con usted y realizar la cotización.
                         </Text>
-                        <View className='bg-filer-blue h-96 w-full rounded-3xl flex-col p-5 justify-evenly items-center'>
+                        <View className='bg-filer-blue w-full rounded-3xl flex-col p-5 justify-evenly items-center gap-y-8 py-14'>
+                        <TextInput placeholder='Razón social' className="h-2/12 w-11/12 bg-white rounded-full p-3 px-5 text-xl"/>
                             <TextInput placeholder='Nombre' className="h-2/12 w-11/12 bg-white rounded-full p-3 px-5 text-xl"/>
                             <TextInput placeholder='Correo electronico' className="h-2/12 w-11/12 bg-white rounded-full p-3 px-5 text-xl"/>
                             <TextInput placeholder='Numero de telefono' className="h-2/12 w-11/12 bg-white rounded-full p-3 px-5 text-xl"/>
                         </View>
-                        <TouchableOpacity className='mt-6 border-slate-400 border-2 w-8/12 items-center p-2 rounded-full'>
-                            <Text className='text-xl'>
+                        <TouchableOpacity className='mt-6 border-filer-blue border-2 w-8/12 items-center p-2 rounded-full'>
+                            <Text className='text-xl text-filer-blue'>
                                 ENVIAR
                             </Text>
                         </TouchableOpacity>

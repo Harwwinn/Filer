@@ -38,19 +38,28 @@
           "Air Filtration Certification",
           "UL 900, ULC-S111"
         ]
-      ]
+      ],
+      "categoria1": "Comercial",
+      "categoria2": "Planos",
+      "categoria3": "AmAir"
     },
     {
       "id": 2,
       "nombre": "AmAir 300X",
       "imagen": "amair300x",
-      "overview": "Expanded metal pleat support grid High loft media increases dust holding capacity Excellent primary filter to prevent dust build-up on heating and cooling coils, fans, and ductwork Excellent prefilter for higher efficiency filters Directly interchangeable with disposable panel filters, media pads in metal frames, or permanent filters used in built-up filter banks and side access systems. No modifications are necessary to frames or latches"
+      "overview": "Expanded metal pleat support grid High loft media increases dust holding capacity Excellent primary filter to prevent dust build-up on heating and cooling coils, fans, and ductwork Excellent prefilter for higher efficiency filters Directly interchangeable with disposable panel filters, media pads in metal frames, or permanent filters used in built-up filter banks and side access systems. No modifications are necessary to frames or latches",
+      "categoria1": "Comercial",
+      "categoria2": "Planos",
+      "categoria3": "AmAir"
     },
     {
       "id": 3,
       "nombre": "AmAir HT",
       "imagen": "amairht",
-      "overview": "Expanded metal pleat support grid High loft media increases dust holding capacity Excellent primary filter to prevent dust build-up on heating and cooling coils, fans, and ductwork Excellent prefilter for higher efficiency filters Directly interchangeable with disposable panel filters, media pads in metal frames, or permanent filters used in built-up filter banks and side access systems. No modifications are necessary to frames or latches"
+      "overview": "Expanded metal pleat support grid High loft media increases dust holding capacity Excellent primary filter to prevent dust build-up on heating and cooling coils, fans, and ductwork Excellent prefilter for higher efficiency filters Directly interchangeable with disposable panel filters, media pads in metal frames, or permanent filters used in built-up filter banks and side access systems. No modifications are necessary to frames or latches",
+      "categoria1": "Comercial",
+      "categoria2": "Planos",
+      "categoria3": "AmAir"
     },
     {
       "id": 4,
@@ -105,7 +114,10 @@
             ]
           }
         }
-      }
+      },
+      "categoria1": "Comercial",
+      "categoria2": "Planos",
+      "categoria3": "Permanentes"
     }
   ]
 }

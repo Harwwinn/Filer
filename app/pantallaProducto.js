@@ -145,7 +145,7 @@ export default function pantallaProducto() {
             </View>
             <View className='w-full items-center h-32 justify-center'>
               {enCarro ?
-                <View className='w-7/12 h-12 bg-blue-500 p-0 rounded-full flex flex-row justify-center items-center overflow-hidden'>
+                <View className='w-7/12 h-12 bg-filer-blue p-0 rounded-full flex flex-row justify-center items-center overflow-hidden'>
                   <TouchableOpacity className="w-3/12 h-full bg-red-500 items-center justify-center" onPress={quitarItem}>
                     <FontAwesome name="minus" size={20} color='white' />
                   </TouchableOpacity>
@@ -154,11 +154,11 @@ export default function pantallaProducto() {
                       {enCarro}
                     </Text>
                   </View>
-                  <TouchableOpacity className="w-3/12 h-full bg-blue-500 items-center justify-center" onPress={anadirACotizacion}>
+                  <TouchableOpacity className="w-3/12 h-full bg-filer-blue items-center justify-center" onPress={anadirACotizacion}>
                     <FontAwesome name="plus" size={20} color='white' />
                   </TouchableOpacity>
                 </View> :
-                <TouchableOpacity className='w-7/12 h-12 bg-blue-500 p-3 rounded-full' onPress={anadirACotizacion}>
+                <TouchableOpacity className='w-7/12 h-12 bg-filer-blue p-3 rounded-full' onPress={anadirACotizacion}>
                   <Text className='text-center text-lg text-white font-semibold'>
                     Añadir a cotización
                   </Text>

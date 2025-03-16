@@ -1,0 +1,27 @@
+{
+    "Comercial": {
+        "Planos": {
+            "Permanentes": {},
+            "AmAir": {},
+            "DreCut500": {}
+        },
+        "Pleated": {
+            "PerfectPleat": {},
+            "Prepleat": {},
+            "MEGApleat": {}
+        },
+        "Box": {
+            "VariCel I": {},
+            "VariCel II": {},
+            "VariCel 2+": {},
+            "BioCel": {}
+        },
+        "Bag": {
+            "DriPack 2000": {}
+        },
+        "Pad & Roll": {}
+    },
+    "Industrial": {},
+    "Farmaceutica/Hospital": {},
+    "Gas-Phase": {}
+}
