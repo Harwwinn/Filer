@@ -23,7 +23,7 @@ export default function pantallaCotizacion() {
             Alert.alert("Error al solicitar cotizacion", "Debe agregar productos a su carrito antes de poder solicitar una cotización")
         }
         else{
-            navigation.navigate("pantallaFormularioCotizacion");
+            navigation.navigate("pantallaFormularioCotizacion", { carrito: global.carrito });
         }
     }
 

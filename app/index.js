@@ -100,7 +100,7 @@ export default function index() {
           <View className="bg-white text-xl min-h-screen">
             <View className="relative z-10 bg-white h-40 items-center justify-end py-2">
               <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2' onPress={() => navigation.navigate('pantallaCotizacion')}>
-                <Text className='text-right text-xl mr-1 text-filer-blue'>Ver lista</Text>
+                <Text className='text-right text-xl mr-1 text-filer-blue'>Ver Lista</Text>
                 <Feather name="wind" size={24} color="#0077bf" />
               </TouchableOpacity>
               <View className='border-gray-800 w-11/12  h-11 rounded-xl relative z-20 flex flex-row justify-center items-center bg-filer-blue2'>

@@ -1,71 +1,94 @@
-require('dotenv').config();  // Cargar las variables de entorno
 const express = require('express');
-const sgMail = require('@sendgrid/mail');
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mjml = require('mjml');
+require('dotenv').config();  // Para cargar variables de entorno
 
 const app = express();
-app.use(express.json());
-const cors = require('cors');
-app.use(cors()); // Esto permitirá solicitudes de cualquier origen
 
-// Verificar si la variable de entorno está cargada correctamente
-console.log('SendGrid API Key:', process.env.SENDGRID_API_KEY);  // Esto debería mostrar la clave de API en la consola
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
 
-// Configurar la clave de API de SendGrid
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+app.use(cors());
+app.use(bodyParser.json());
 
-// Ruta para enviar el correo
-app.post('/send-quote', (req, res) => {
-  const { items, email, name, phone, company } = req.body;
+app.post('/send-quote', async (req, res) => {
+    const { name, email, phone, company, productos } = req.body;
 
-  if (!items || !email || !name || !phone || !company) {
-    return res.status(400).json({ error: 'Faltan datos requeridos' });
-  }
+    const itemList = productos.map(item => `
+        <mj-table>
+            <tr>
+                <td>${item.filtro}</td>
+                <td>${item.material}</td>
+                <td>${item.nomDeep} / ${item.realDeep}</td>
+                <td>${item.nomSize} / ${item.realSize}</td>
+                <td>${item.cantidad}</td>
+            </tr>
+        </mj-table>
+    `).join('');
 
-  const message = {
-    to: process.env.DESTINATION_EMAIL,  // Dirección de correo de destino
-    from: email,  // El correo del remitente (el correo que se recibe desde el formulario)
-    subject: 'Nueva solicitud de cotización',
-    text: `
-      Nombre: ${name}
-      Correo: ${email}
-      Teléfono: ${phone}
-      Razón Social: ${company}
-      Productos: ${items.map(item => `${item.name} - Cantidad: ${item.quantity}`).join('\n')}
-    `,
-    html: `
-      <h2>Solicitud de Cotización</h2>
-      <p><strong>Nombre:</strong> ${name}</p>
-      <p><strong>Correo:</strong> ${email}</p>
-      <p><strong>Teléfono:</strong> ${phone}</p>
-      <p><strong>Razón Social:</strong> ${company}</p>
-      <h3>Productos:</h3>
-      <ul>
-        ${items.map(item => `<li>${item.name} - Cantidad: ${item.quantity}</li>`).join('')}
-      </ul>
-    `,
-  };
+    const mjmlTemplate = `
+        <mjml>
+          <mj-head>
+            <mj-preview>Solicitud de Cotización</mj-preview>
+            <mj-style inline="inline">
+              table { width: 100%; border-collapse: collapse; }
+              th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+              th { background-color: #f8f8f8; }
+            </mj-style>
+          </mj-head>
+          <mj-body>
+            <mj-section>
+              <mj-column>
+                <mj-text font-size="20px" font-weight="bold">Solicitud de Cotización</mj-text>
+                <mj-text><strong>Razón Social:</strong> ${company}</mj-text>
+                <mj-text><strong>Nombre:</strong> ${name}</mj-text>
+                <mj-text><strong>Correo:</strong> ${email}</mj-text>
+                <mj-text><strong>Teléfono:</strong> ${phone}</mj-text>
+                <mj-text font-size="18px" font-weight="bold">Productos seleccionados:</mj-text>
+                <mj-table>
+                  <tr>
+                    <th>Filtro</th>
+                    <th>Material</th>
+                    <th>Profundidad Nom/Real</th>
+                    <th>Tamaño Nom/Real</th>
+                    <th>Cantidad</th>
+                  </tr>
+                  ${itemList}
+                </mj-table>
+              </mj-column>
+            </mj-section>
+          </mj-body>
+        </mjml>
+    `;
 
-  // Enviar el correo
-  sgMail
-    .send(message)
-    .then(() => {
-      res.json({ message: 'Cotización enviada con éxito' });
-    })
-    .catch((error) => {
-        setMessage('Error al enviar el formulario. Intenta nuevamente.');
-        console.error('Error al enviar el formulario:', error);
-        if (error.response) {
-            console.error('Response error:', error.response);
-        }
-        if (error.request) {
-            console.error('Request error:', error.request);
+    const htmlMessage = mjml(mjmlTemplate).html;
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER, 
+            pass: process.env.EMAIL_PASS  
         }
     });
-    
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER,
+        subject: 'Nueva solicitud de cotización',
+        html: htmlMessage
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: 'Cotización enviada con éxito' });
+    } catch (error) {
+        console.error('Error al enviar el correo:', error);
+        res.status(500).json({ error: 'Error al enviar el correo' });
+    }
 });
 
-// Iniciar servidor
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+// 🔹 En lugar de `app.listen`, exportamos `app` para Vercel
+module.exports = app;
