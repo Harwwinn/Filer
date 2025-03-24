@@ -19,14 +19,14 @@ export default function pantallaCotizacion() {
     setEnCarro(enCarro - 1);
   }
 
-  const handleSolicitarCotizacion = () => {
-    if (global.carrito.length === 0) {
-      Alert.alert("Error al solicitar cotizacion", "Debe agregar productos a su carrito antes de poder solicitar una cotización")
+    const handleSolicitarCotizacion = () => {
+        if(global.carrito.length === 0){
+            Alert.alert("Error al solicitar cotizacion", "Debe agregar productos a su carrito antes de poder solicitar una cotización")
+        }
+        else{
+            navigation.navigate("pantallaFormularioCotizacion", { carrito: global.carrito });
+        }
     }
-    else {
-      navigation.navigate("pantallaFormularioCotizacion");
-    }
-  }
 
   return (
     <SafeAreaView>
