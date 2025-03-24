@@ -10,6 +10,27 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 export default function pantallaCotizacion() {
 
   const navigation = useNavigation();
+  
+  // Estado del carrito inicial (global.carrito)
+  const [carrito, setCarrito] = useState([...global.carrito]); // Clonamos global.carrito para manejar el estado local
+
+  // Función para manejar la actualización del carrito
+  const actualizarCarrito = (id, nuevaCantidad) => {
+    if (nuevaCantidad !== undefined) {
+      // Actualizar la cantidad si nuevaCantidad está definida
+      setCarrito(prevCarrito =>
+        prevCarrito.map(producto => (producto.id === id ? { ...producto, cantidad: nuevaCantidad } : producto))
+      );
+    } else {
+      // Si nuevaCantidad es undefined, eliminar producto
+      setCarrito(prevCarrito => prevCarrito.filter(producto => producto.id !== id));
+    }
+
+    // Sincronizar también el array global
+    global.carrito = nuevaCantidad !== undefined
+      ? carrito.map(producto => (producto.id === id ? { ...producto, cantidad: nuevaCantidad } : producto))
+      : carrito.filter(p => p.id !== id);
+  };
 
   const anadirACotizacion = () => {
     setEnCarro(enCarro + 1);
@@ -19,14 +40,14 @@ export default function pantallaCotizacion() {
     setEnCarro(enCarro - 1);
   }
 
-    const handleSolicitarCotizacion = () => {
-        if(global.carrito.length === 0){
-            Alert.alert("Error al solicitar cotizacion", "Debe agregar productos a su carrito antes de poder solicitar una cotización")
-        }
-        else{
-            navigation.navigate("pantallaFormularioCotizacion", { carrito: global.carrito });
-        }
+  const handleSolicitarCotizacion = () => {
+    if (global.carrito.length === 0) {
+      Alert.alert("Error al solicitar cotizacion", "Debe agregar productos a su carrito antes de poder solicitar una cotización")
     }
+    else {
+      navigation.navigate("pantallaFormularioCotizacion", { carrito: global.carrito });
+    }
+  }
 
   return (
     <SafeAreaView>
@@ -48,7 +69,7 @@ export default function pantallaCotizacion() {
         <ScrollView showsVerticalScrollIndicator={true}>
           <View className="items-center flex w-full gap-y-4 py-4 ">
             {/* Renderizar productos */}
-            {global.carrito.map((producto) => (<ContainerProductoCarrito producto={producto}/>))}
+            {global.carrito.map((producto) => (<ContainerProductoCarrito producto={producto} onUpdate={actualizarCarrito} key={producto.id}/>))}
           </View>
         </ScrollView>
       </View>

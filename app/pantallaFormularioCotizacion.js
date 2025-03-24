@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { useState } from 'react';
 import React from 'react';
-import { useRoute } from '@react-navigation/native';
+//import { useRoute } from '@react-navigation/native';
 
 export default function PantallaFormularioCotizacion() {
     const [razonSocial, setRazonSocial] = useState('');
@@ -10,12 +10,12 @@ export default function PantallaFormularioCotizacion() {
     const [telefono, setTelefono] = useState('');
     const [items, setItems] = useState([]);
     const [message, setMessage] = useState('');
-    const {carrito} = route().params;
+    //const {carrito} = route().params;
 
     // Función que maneja el envío del formulario
     const enviarFormulario = async () => {
         const data = {
-            items: carrito,  // Enviar productos seleccionados
+            productos: global.carrito,  // Enviar productos seleccionados
             email: correo,
             name: nombre,
             phone: telefono,
@@ -23,7 +23,7 @@ export default function PantallaFormularioCotizacion() {
         };
     
         try {
-            const response = await fetch('http://localhost:5000/send-quote', {
+            const response = await fetch('https://servidorfiler.vercel.app/send-quote', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

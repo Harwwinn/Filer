@@ -15,7 +15,7 @@ export default function pantallaProducto() {
   const [enCarro, setEnCarro] = useState(0);
 
   const [mensaje, setMensaje] = useState(<></>);
-  const [cantidad, setCantidad] = useState("");
+  const [cantidad, setCantidad] = useState(0);
 
   const navigation = useNavigation();
   const data = [
@@ -79,14 +79,14 @@ export default function pantallaProducto() {
   }).current;
 
 
-  const anadirACotizacion = async () => {
+  const anadirACotizacion = () => {
     if (!material || !profundidad || !tamano || !cantidad) {
       setMensaje(<View className='w-11/12 rounded-xl border-red-700 border-2 bg-red-300 p-3 mt-5'>
         <Text className="text-base text-center">No pudes dejar el material, la profundidad, el tamaño o la cantidad en blanco</Text>
       </View>)
     }
     else {
-      global.carrito.push({ id: Math.floor(Math.random() * 100000), cantidad: cantidad, nombre: item.nombre, imagen: item.imagen, material: material, profundidad: profundidad, tamano:tamano });
+      global.carrito.push({ id: Math.floor(Math.random() * 100000), cantidad: parseInt(cantidad), filtro: item.nombre, imagen: item.imagen, material: material, nomDeep: profundidad, realDeep: item.tipo[material][profundidad].profundidad_real, nomSize:tamano, realSize: actualSize });
       setMensaje(<View className='w-11/12 rounded-xl border-green-700 border-2 bg-green-300 p-3 mt-5'>
         <Text className="text-base text-center">Se agrego el producto a tu lista de cotización!</Text>
       </View>)
@@ -301,7 +301,7 @@ export default function pantallaProducto() {
               </View>
 
 
-              <TouchableOpacity className="my-5 bg-filer-blue p-4 rounded-xl" onPress={() => anadirACotizacion()}>
+              <TouchableOpacity className="my-5 bg-filer-blue p-4 rounded-xl" onPress={anadirACotizacion}>
                 <Text className="text-white text-lg">
                   CARGAR SELECCION
                 </Text>
