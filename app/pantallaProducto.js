@@ -5,28 +5,45 @@ import Feather from '@expo/vector-icons/Feather';
 import images from '../assets/images/images';
 import React from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native';
-import PagerView from 'react-native-pager-view';
+//import PagerView from 'react-native-pager-view';
+import { Picker } from '@react-native-picker/picker';
 
 export default function pantallaProducto() {
 
   const route = useRoute();
   const { item } = route.params;
   const [enCarro, setEnCarro] = useState(0);
+
+  const [mensaje, setMensaje] = useState(<></>);
+  const [cantidad, setCantidad] = useState("");
+
   const navigation = useNavigation();
   const data = [
     { id: '1', imagen: images[item.imagen] },
     { id: '2', imagen: images[item.imagen] }
   ];
 
-  //Agregamos useEffect para que cuando se cargue el componente se verifique
-  useEffect(() => {
+  //Estados para manejar el cambio de materiales tamano y profundidad
+  const [material, setMaterial] = useState("");
+  const [profundidad, setProfundidad] = useState("");
+  const [tamano, setTamano] = useState("");
+  const [actualSize, setActualSize] = useState('');
+
+  // Obtener las opciones dinámicas según el estado actual
+  const materiales = item?.tipo ? Object.keys(item?.tipo) : [];
+  const profundidades = material ? Object.keys(item.tipo[material]) : [];
+  const tamanos = profundidad ? item.tipo[material][profundidad].tamanos : [];
+
+  //Agregamos useEffect para que cuando se cargue el componente se verifique si ya esta en el carrito
+  /*useEffect(() => {
     const productoEnCarrito = global.carrito.find(producto => producto.id === item.id);
     if (productoEnCarrito) {
       setEnCarro(productoEnCarrito.cantidad);
     }
-  }, []);
+  }, []);*/
 
   let especificaciones = []
+  //Si se tienen especificaciones entonces se ponen en un formato para mostrarlos en la pantalla del producto
   if (item.specifications) {
     for (let i = 0; i < item.specifications.length; i++) {
       if (i == item.specifications.length - 1) {
@@ -62,10 +79,22 @@ export default function pantallaProducto() {
   }).current;
 
 
-  const anadirACotizacion = () => {
-    setEnCarro(enCarro + 1);
+  const anadirACotizacion = async () => {
+    if (!material || !profundidad || !tamano || !cantidad) {
+      setMensaje(<View className='w-11/12 rounded-xl border-red-700 border-2 bg-red-300 p-3 mt-5'>
+        <Text className="text-base text-center">No pudes dejar el material, la profundidad, el tamaño o la cantidad en blanco</Text>
+      </View>)
+    }
+    else {
+      global.carrito.push({ id: Math.floor(Math.random() * 100000), cantidad: cantidad, nombre: item.nombre, imagen: item.imagen, material: material, profundidad: profundidad, tamano:tamano });
+      setMensaje(<View className='w-11/12 rounded-xl border-green-700 border-2 bg-green-300 p-3 mt-5'>
+        <Text className="text-base text-center">Se agrego el producto a tu lista de cotización!</Text>
+      </View>)
+    }
+
+
     //Se verifica si esta el producto en el carrito, sino entonces se anade
-    if (global.carrito.some((producto) => producto?.id == item.id)) {
+    /*if (global.carrito.some((producto) => producto?.id == item.id)) {
       //Se busca el prodcuto y se agrega 1 a la cantidad
       global.carrito.find((producto, i) => {
         if (producto.id == item.id) {
@@ -75,25 +104,25 @@ export default function pantallaProducto() {
       })
     }
     //En caso de que el producto ya este en el carrito entonces se incrementa su cantidad
-    else {
-      global.carrito.push({ id: item.id, cantidad: 1 })
-    }
-    console.log(global.carrito);
+    else {*/
+    //global.carrito.push({ id: item.id, cantidad: 1 })
+    /*}
+    console.log(global.carrito);*/
   }
 
 
-  const quitarItem = () => {
+  /*const quitarItem = () => {
     setEnCarro(enCarro - 1);
     //Se verifica si esta el producto en el carrito, sino entonces se anade
     if (global.carrito.some((producto) => producto?.id == item.id)) {
       //Se busca el prodcuto y se agrega 1 a la cantidad
       global.carrito.find((producto, i) => {
         if (producto.id == item.id) {
-          if (global.carrito[i].cantidad == 1){
+          if (global.carrito[i].cantidad == 1) {
             global.carrito = global.carrito.filter((elemento, j) => j !== i);
 
           }
-          else{
+          else {
             global.carrito[i].cantidad = global.carrito[i].cantidad - 1;
           }
           return true;
@@ -101,7 +130,7 @@ export default function pantallaProducto() {
       })
     }
     console.log(global.carrito);
-  }
+  }*/
 
 
   return (
@@ -109,7 +138,7 @@ export default function pantallaProducto() {
       <View className="bg-white text-xl h-screen">
         <View className="relative z-10 bg-white h-28 items-center justify-end py-2">
           <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2' onPress={() => navigation.navigate('pantallaCotizacion')}>
-            <Text className='text-right text-xl mr-1'>Ver lista</Text>
+            <Text className='text-right text-xl mr-1 text-filer-blue'>Ver lista</Text>
             <Feather name="wind" size={24} color="black" />
           </TouchableOpacity>
         </View>
@@ -144,7 +173,7 @@ export default function pantallaProducto() {
               <FontAwesome name="circle" size={24} color={`${currentIndex ? "#5e5e5e" : "#adadad"}`} className="w-1/12 " />
             </View>
             <View className='w-full items-center h-32 justify-center'>
-              {enCarro ?
+              {/*enCarro ?
                 <View className='w-7/12 h-12 bg-filer-blue p-0 rounded-full flex flex-row justify-center items-center overflow-hidden'>
                   <TouchableOpacity className="w-3/12 h-full bg-red-500 items-center justify-center" onPress={quitarItem}>
                     <FontAwesome name="minus" size={20} color='white' />
@@ -162,7 +191,7 @@ export default function pantallaProducto() {
                   <Text className='text-center text-lg text-white font-semibold'>
                     Añadir a cotización
                   </Text>
-                </TouchableOpacity>}
+                </TouchableOpacity>*/}
             </View>
             <View className='gap-3 px-5'>
               <Text className='text-red-500 text-5xl'>
@@ -180,7 +209,7 @@ export default function pantallaProducto() {
                 </View>
               }
             </View>
-
+            {mensaje}
             <View className="px-5 justify-center items-center mt-5 w-full gap-y-4">
               <Text className="text-2xl font-bold">
                 Realiza Tu Seleccion
@@ -191,50 +220,76 @@ export default function pantallaProducto() {
                     <Text className=" bg-white w-14 text-center left-5 -top-4 text-base">
                       Qty.
                     </Text>
-                    <TextInput className="z-50 w-full h-full absolute" >
-
-                    </TextInput>
+                    <TextInput className="z-50 w-full h-full absolute px-2" keyboardType='numeric' value={cantidad} onChangeText={setCantidad} />
                   </View>
                 </View>
                 <View className="w-7/12 h-16 px-1 pt-2">
-                  <View className="w-full h-full border-2 border-black rounded-2xl">
-                    <Text className=" bg-white w-20 text-center left-5 -top-4 text-base">
+                  <View className="w-full h-full border-2 border-black rounded-2xl justify-center">
+                    <Text className=" bg-white w-20 text-center left-5 -top-4 text-base absolute">
                       Material
                     </Text>
+                    <Picker className="w-full" selectedValue={material} onValueChange={(value) => { setMaterial(value); setProfundidad(""); setTamano("") }}>
+                      <Picker.Item label="Seleccione Material" value="" />
+                      {materiales.map((mat) => (
+                        <Picker.Item key={mat} label={mat} value={mat} />
+                      ))}
+                    </Picker>
                   </View>
                 </View>
               </View>
 
               <View className="flex flex-row w-full justify-between ">
                 <View className="w-5/12 h-16 px-1 pt-2 overflow-hidden">
-                  <View className="w-full h-full border-2 border-black rounded-2xl">
-                    <Text className=" bg-white w-14 text-center left-5 -top-4 text-base">
+                  <View className="w-full h-full border-2 border-black rounded-2xl justify-center">
+                    <Text className=" bg-white w-14 text-center left-5 -top-4 text-base absolute">
                       Deep
                     </Text>
+                    <Picker className="w-full" selectedValue={profundidad} onValueChange={(value) => { setProfundidad(value); setTamano("") }}>
+                      <Picker.Item label="Seleccione Profundidad" value="" />
+                      {profundidades.map((deep) => (
+                        <Picker.Item key={deep} label={deep} value={deep} />
+                      ))}
+                    </Picker>
                   </View>
                 </View>
                 <View className="w-7/12 h-16 px-1 pt-2">
-                  <View className="w-full h-full border-2 border-black rounded-2xl">
-                    <Text className=" bg-white w-28 text-center left-5 -top-4 text-base">
+                  <View className="w-full h-full border-2 border-black rounded-2xl justify-center">
+                    <Text className=" bg-white w-28 text-center left-5 -top-4 text-base absolute">
                       Actual Deep
                     </Text>
+                    <Text className="text-center">{profundidad && item.tipo[material][profundidad].profundidad_real}</Text>
                   </View>
                 </View>
               </View>
 
               <View className="flex flex-row w-full justify-between ">
                 <View className="w-5/12 h-16 px-1 pt-2 overflow-hidden">
-                  <View className="w-full h-full border-2 border-black rounded-2xl">
-                    <Text className=" bg-white w-32 text-center left-2 -top-4 text-base">
+                  <View className="w-full h-full border-2 border-black rounded-2xl justify-center">
+                    <Text className=" bg-white w-32 text-center left-2 -top-4 text-base absolute">
                       Size nom (WxH)
                     </Text>
+                    <Picker
+                      selectedValue={tamano}
+                      onValueChange={(value) => {
+                        setTamano(value);
+                        const selectedTamano = tamanos.find((t) => t.nominal === value);
+                        setActualSize(selectedTamano ? selectedTamano.real : '');
+                      }}
+                    >
+                      <Picker.Item label="Seleccione tamaño" value="" />
+                      {tamanos.map((tam) => (
+                        <Picker.Item key={tam.nominal} label={tam.nominal} value={tam.nominal} />
+                      ))}
+
+                    </Picker>
                   </View>
                 </View>
                 <View className="w-7/12 h-16 px-1 pt-2">
-                  <View className="w-full h-full border-2 border-black rounded-2xl">
-                    <Text className=" bg-white w-28 text-center left-5 -top-4 text-base">
+                  <View className="w-full h-full border-2 border-black rounded-2xl justify-center">
+                    <Text className=" bg-white w-28 text-center left-5 -top-4 text-base absolute">
                       Actual Size
                     </Text>
+                    <Text className="text-center">{tamano && actualSize}</Text>
                   </View>
                 </View>
               </View>
@@ -246,7 +301,7 @@ export default function pantallaProducto() {
               </View>
 
 
-              <TouchableOpacity className="my-5 bg-filer-blue p-4 rounded-xl">
+              <TouchableOpacity className="my-5 bg-filer-blue p-4 rounded-xl" onPress={() => anadirACotizacion()}>
                 <Text className="text-white text-lg">
                   CARGAR SELECCION
                 </Text>

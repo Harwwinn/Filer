@@ -82,6 +82,22 @@
               {
                 "nominal": "16 x 25",
                 "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
               }
             ]
           },
@@ -95,6 +111,92 @@
               {
                 "nominal": "16 x 20",
                 "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          },
+          "2\"": {
+            "profundidad_real": "1¾",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          },
+          "4\"": {
+            "profundidad_real": "3¾",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
               }
             ]
           }
@@ -108,8 +210,261 @@
                 "real": "11½ x 23½"
               },
               {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
                 "nominal": "16 x 25",
                 "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          },
+          "1\"": {
+            "profundidad_real": "7/8",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          },
+          "2\"": {
+            "profundidad_real": "1¾",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          },
+          "4\"": {
+            "profundidad_real": "3¾",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          }
+        },
+        "Acero Inoxidable": {
+          "1/2\"": {
+            "profundidad_real": "7/16",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          },
+          "1\"": {
+            "profundidad_real": "7/8",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          },
+          "2\"": {
+            "profundidad_real": "1¾",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
+              }
+            ]
+          },
+          "4\"": {
+            "profundidad_real": "3¾",
+            "tamanos": [
+              {
+                "nominal": "12 x 24",
+                "real": "11½ x 23½"
+              },
+              {
+                "nominal": "16 x 20",
+                "real": "15½ x 19½"
+              },
+              {
+                "nominal": "16 x 25",
+                "real": "15½ x 24½"
+              },
+              {
+                "nominal": "20 x 20",
+                "real": "19½ x 19½"
+              },
+              {
+                "nominal": "20 x 24",
+                "real": "19½ x 23½"
+              },
+              {
+                "nominal": "20 x 25",
+                "real": "19½ x 24½"
+              },
+              {
+                "nominal": "24 x 24",
+                "real": "23½ x 23½"
               }
             ]
           }
