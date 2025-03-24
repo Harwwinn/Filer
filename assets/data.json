@@ -4,7 +4,16 @@
       "id": 1,
       "nombre": "AmAir 300X",
       "imagen": "amair300x",
-      "overview": "Expanded metal pleat support grid High loft media increases dust holding capacity Excellent primary filter to prevent dust build-up on heating and cooling coils, fans, and ductwork Excellent prefilter for higher efficiency filters Directly interchangeable with disposable panel filters, media pads in metal frames, or permanent filters used in built-up filter banks and side access systems. No modifications are necessary to frames or latches",
+      "overview": [
+        "• Low initial resistance",
+        "• High-efficiency MERV 11 media",
+        "• Captures microscopic airborne particles",
+        "• Ideal for both commercial and residential applications",
+        "• At least 33% more airflow than any other 4″-5″ filter, resulting in lower energy costs",
+        "• Easy to install and maintain",
+        "• Available in 1\", 2\", and 4\" sizes",
+        "• UL 900, ULC-S111 air filtration certification required for commercial use in the U.S. and Canada" 
+      ],
       "specifications": [
         [
           "Filter Depth",
@@ -47,7 +56,13 @@
       "id": 2,
       "nombre": "AmAir 300X",
       "imagen": "amair300x",
-      "overview": "Expanded metal pleat support grid High loft media increases dust holding capacity Excellent primary filter to prevent dust build-up on heating and cooling coils, fans, and ductwork Excellent prefilter for higher efficiency filters Directly interchangeable with disposable panel filters, media pads in metal frames, or permanent filters used in built-up filter banks and side access systems. No modifications are necessary to frames or latches",
+      "overview": [
+          "• Low maintenance",
+          "• Ideally suited for high moisture and high temperature conditions (Up to 350°F)",
+          "• Lightweight construction makes filters easy to handle",
+          "• Designed with drain holes to ensure removal of excess water",
+          "• Frame made from aluminum, galvanized, or stainless steel"
+      ],
       "categoria1": "Comercial",
       "categoria2": "Planos",
       "categoria3": "AmAir"
@@ -56,7 +71,13 @@
       "id": 3,
       "nombre": "AmAir HT",
       "imagen": "amairht",
-      "overview": "Expanded metal pleat support grid High loft media increases dust holding capacity Excellent primary filter to prevent dust build-up on heating and cooling coils, fans, and ductwork Excellent prefilter for higher efficiency filters Directly interchangeable with disposable panel filters, media pads in metal frames, or permanent filters used in built-up filter banks and side access systems. No modifications are necessary to frames or latches",
+      "overview": [
+          "• Low maintenance",
+          "• Ideally suited for high moisture and high temperature conditions (Up to 350°F)",
+          "• Lightweight construction makes filters easy to handle",
+          "• Designed with drain holes to ensure removal of excess water",
+          "• Frame made from aluminum, galvanized, or stainless steel"
+      ],
       "categoria1": "Comercial",
       "categoria2": "Planos",
       "categoria3": "AmAir"
@@ -65,7 +86,13 @@
       "id": 4,
       "nombre": "Permanent Metal Air Filters",
       "imagen": "amairht",
-      "overview": "•Low maintenance \n• Ideally suited for high moisture and high temperature conditions (Up to 350°F) \n•Lightweight	construction makes filters easy to	handle\n•Designed with drain holes to ensure removal of excess water\n•Frame made from aluminum, galvanized, or stainless steel",
+      "overview": [
+          "• Low maintenance",
+          "• Ideally suited for high moisture and high temperature conditions (Up to 350°F)",
+          "• Lightweight construction makes filters easy to handle",
+          "• Designed with drain holes to ensure removal of excess water",
+          "• Frame made from aluminum, galvanized, or stainless steel"
+      ],
       "tipo": {
         "Aluminio": {
           "1/2\"": {

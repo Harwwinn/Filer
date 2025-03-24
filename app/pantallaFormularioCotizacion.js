@@ -1,6 +1,7 @@
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { useState } from 'react';
 import React from 'react';
+import { useRoute } from '@react-navigation/native';
 
 export default function PantallaFormularioCotizacion() {
     const [razonSocial, setRazonSocial] = useState('');
@@ -9,25 +10,19 @@ export default function PantallaFormularioCotizacion() {
     const [telefono, setTelefono] = useState('');
     const [items, setItems] = useState([]);
     const [message, setMessage] = useState('');
+    const {carrito} = route().params;
 
     // Función que maneja el envío del formulario
     const enviarFormulario = async () => {
-        // Crear un array de objetos (en este caso vacío, puedes rellenarlo según tus necesidades)
-        const itemsArray = items.map(item => ({
-            name: item.name,
-            quantity: item.quantity,
-        }));
-
         const data = {
-            items: itemsArray,
+            items: carrito,  // Enviar productos seleccionados
             email: correo,
             name: nombre,
             phone: telefono,
             company: razonSocial
         };
-
+    
         try {
-            // Enviar la solicitud POST al backend
             const response = await fetch('http://localhost:5000/send-quote', {
                 method: 'POST',
                 headers: {
@@ -35,9 +30,9 @@ export default function PantallaFormularioCotizacion() {
                 },
                 body: JSON.stringify(data),
             });
-
+    
             const result = await response.json();
-
+    
             if (response.ok) {
                 setMessage('¡Cotización enviada con éxito!');
             } else {
