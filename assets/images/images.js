@@ -6,6 +6,7 @@ export default {
   fondoPrincipal: require('./fondo.jpg'),
   filerLogo: require('./filerLogo.jpg'),
   aafLogo: require('./aafLogo.png'),
+  permanent_metal_air_filters: require('./permanent_metal_air_filters.png'),
 };
   
   

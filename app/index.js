@@ -9,6 +9,7 @@ import ContainerProducto from './components/containerProductoMainPage';
 import '../assets/carrito';
 import PantallaInicio from './pantallas/pantallaInicio';
 import Filters from './components/Filters';
+import { StatusBar } from 'react-native';
 
 const categorias = require('../assets/categorias.json');
 const data = require('../assets/data.json');
@@ -94,26 +95,36 @@ export default function index() {
 
   return (
     <SafeAreaView className='min-h-screen'>
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       {pantalla == "inicio" ? <PantallaInicio setPantalla={setPantalla} />
         :
         <ScrollView>
           <View className="bg-white text-xl min-h-screen">
-            <View className="relative z-10 bg-white h-40 items-center justify-end py-2">
-              <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2' onPress={() => navigation.navigate('pantallaCotizacion')}>
-                <Text className='text-right text-xl mr-1 text-filer-blue'>Ver Lista</Text>
-                <Feather name="wind" size={24} color="#0077bf" />
-              </TouchableOpacity>
+            <View className="relative z-10 bg-white min-h-28 items-center justify-end py-2">
+              {/* Botón ver lista */}
+              <View className="bg-white h-15 justify-end items-center">
+                <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2' onPress={() => navigation.navigate('pantallaCotizacion')}>
+                  <Text className='text-right text-xl mr-1 text-filer-blue'>Ver Lista</Text>
+                  <Feather name="wind" size={24} color="#0077bf" />
+                </TouchableOpacity>
+              </View>
+
+              {/* Botón de búsqueda */}
               <View className='border-gray-800 w-11/12  h-11 rounded-xl relative z-20 flex flex-row justify-center items-center bg-filer-blue2'>
                 <TextInput className='text-sm w-11/12 text-black' value={searchTerm} onChangeText={(text) => setSearchTerm(text)} placeholder='Escribe el modelo del filtro'/>
                 <FontAwesome6 name="magnifying-glass" size={24} color="#0077bf" className="w-1/12 " />
               </View>
-              <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mt-2' onPress={() => setMostrarCategorias(!mostrarCategorias)}>
-                <Text className='text-right text-xl mr-1 text-filer-blue'>Filtrar por categoria</Text>
-                <Feather name="sliders" size={24} color="#0077bf" />
-              </TouchableOpacity>
+
+              {/* Filtrar por categoría */}
+              <View className="w-full h-12 flex flex-row justify-end items-center pr-5">
+                <TouchableOpacity className="flex flex-row items-center" onPress={() => setMostrarCategorias(!mostrarCategorias)}>
+                  <Text className="text-xl mr-1 text-filer-blue">Filtrar por categoría</Text>
+                  <Feather name="sliders" size={24} color="#0077bf" />
+                </TouchableOpacity>
+              </View>
             </View>
             {mostrarCategorias &&
-              <View className="w-full p-5 border-b-filer-blue2 border-b-2">
+              <View className="w-full pt-1 pb-2 px-6 border-b-filer-blue2 border-b-2">
                 <Text className="text-xl text-filer-blue">Linea</Text>
                 <View className="w-full flex-row gap-x-2 gap-y-2 flex-wrap py-2">
                   {Object.keys(categorias).map((category) => (

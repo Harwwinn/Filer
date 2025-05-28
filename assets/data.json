@@ -85,7 +85,7 @@
     {
       "id": 4,
       "nombre": "Permanent Metal Air Filters",
-      "imagen": "amairht",
+      "imagen": "permanent_metal_air_filters",
       "overview": [
           "• Low maintenance",
           "• Ideally suited for high moisture and high temperature conditions (Up to 350°F)",
@@ -497,7 +497,7 @@
           }
         }
       },
-      "categoria1": "Comercial",
+      "categoria1": "HVAC Filtration",
       "categoria2": "Planos",
       "categoria3": "Permanentes"
     }

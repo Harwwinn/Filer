@@ -52,10 +52,10 @@ export default function pantallaCotizacion() {
   return (
     <SafeAreaView>
       <View className="bg-white text-xl h-screen">
-        <View className="relative z-10 bg-white h-28 items-center justify-end py-2">
+        <View className="relative z-10 bg-white h-15 items-center justify-end py-2">
           <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2'>
-            <Text className='text-right text-xl mr-1'>Ver lista</Text>
-            <Feather name="wind" size={24} color="black" />
+            <Text className='text-right text-xl mr-1 text-filer-blue'>Ver Lista</Text>
+            <Feather name="wind" size={24} color="#0077bf" />
           </TouchableOpacity>
         </View>
         <View className="p-5 items-center">
