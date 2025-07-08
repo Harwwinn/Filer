@@ -1,27 +1,57 @@
 {
-    "HVAC Filtration": {
-        "Planos": {
-            "Permanentes": {},
-            "AmAir": {},
-            "DreCut500": {}
-        },
-        "Pleated": {
-            "PerfectPleat": {},
-            "Prepleat": {},
-            "MEGApleat": {}
-        },
-        "Box": {
-            "VariCel I": {},
-            "VariCel II": {},
-            "VariCel 2+": {},
-            "BioCel": {}
-        },
-        "Bag": {
-            "DriPack 2000": {}
-        },
-        "Pad & Roll": {}
+  "HVAC Filtration": {
+    "Planos": {
+      "descripcion": "Pueden ser desechables o lavables, son fáciles de instalar en edificios comerciales. Los lavables son reutilizables, son fáciles de mantener y resisten condiciones en las que las altas temperaturas y la humedad son un problema, con agujeros para drenar el agua",
+      "imagen": "panel_filters_image",
+      "subcategorias": {
+        "Permanentes": {},
+        "AmAir": {},
+        "DreCut500": {}
+      }
     },
-    "Industrial": {},
-    "Farmaceutica/Hospital": {},
-    "Gas-Phase": {}
+    "Pleated": {
+      "descripcion": "La meda filtrante está plisados ​​para aumentar la superficie del filtro, el resultado es un filtro diseñado para durar más y reducir el mantenimiento. Su diseño ofrece una baja resistencia inicial por lo que pueden reducir el consumo de energía.",
+      "imagen": "pleated_filters_image",
+      "subcategorias": {
+        "PerfectPleat": {},
+        "Prepleat": {},
+        "MEGApleat": {}
+      }
+    },
+    "Box": {
+      "descripcion": "Estos filtros brindan un alto nivel de protección en un espacio reducido. Pueden reducir los contaminantes finos y proteger contra partículas pequeñas que transportan virus y bacterias. El diseño que ahorra espacio ayuda a reducir los costos de envío, almacenamiento y manipulación.",
+      "imagen": "box_filters_image",
+      "subcategorias": {
+        "VariCel I": {},
+        "VariCel II": {},
+        "VariCel 2+": {},
+        "BioCel": {}
+      }
+    },
+    "Bag": {
+      "descripcion": "Filtros tipo bolsa ofrecen mayor eficiencia y durabilidad, Son de fácil instalación. se han probado para cumplir con estrictos estándares de rendimiento. Hay opciones disponibles para una amplia gama de entornos, desde aplicaciones industriales y mineras hasta atención médica y hotelería.",
+      "imagen": "bag_filters_image",
+      "subcategorias": {
+        "DriPack 2000": {}
+      }
+    },
+    "Pad & Roll": {
+      "descripcion": "La media filtrante es sintética. El diseño consiste de una estructura de fibras intrincadas que pueden retener más suciedad con menos resistencia. Se ofrece en almohadillas y rollos para recortes en aplicaciones desde escuelas y universidades hasta cabinas de pulverización de pintura y salas de tejido.",
+      "imagen": "media_pads_rolls_image",
+      "subcategorias": {}
+    },
+    "High Temp filters": {
+        "descripcion": "Estos filtros eliminan los contaminantes del aire para proteger los procesos que utilizan aire caliente, incluidos el procesamiento de alimentos y la fotografía. Los componentes están hechos de materiales que resisten altas temperaturas. El enclavamiento mecánico significa que no se necesitan pegamentos ni selladores.",
+        "imagen": "high_temp_filters_image",
+        "subcategorias": {}
+    },
+    "V-Bank filters":{
+        "descripcion": "Los filtros V-Bank amplían la superficie de un filtro estándar sin aumentar el tamaño del filtro. La alta capacidad de retención de polvo permite una mayor vida útil del filtro para reducir el tiempo y el costo de mantenimiento.",
+        "imagen": "v_bank_filters_image",
+        "subcategorias": {}
+    }
+  },
+  "HEPA Filtration": {},
+  "Gas Phase Filtration": {},
+  "Energia & Industrial": {}
 }

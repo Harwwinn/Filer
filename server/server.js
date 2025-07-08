@@ -108,7 +108,7 @@ app.post('/send-quote', async (req, res) => {
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: 'edgar.rosas@filer.com.mx',
+        to: 'diegogo3035@gmail.com',
         subject: 'Nueva solicitud de cotización',
         html: htmlMessage
     };

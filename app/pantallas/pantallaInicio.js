@@ -1,39 +1,116 @@
-import { View, Text, Image, Touchable, TouchableOpacity } from 'react-native'
-import React from 'react'
-import images from '../../assets/images/images';
+import { View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import React from 'react';
+import images from '../../assets/images/images'; // Asegúrate que la ruta sea correcta
 
-export default function pantallaInicio({ setPantalla }) {
-	return (
-		<View className="w-full h-full">
-			<TouchableOpacity activeOpacity={1} onPress={() => setPantalla("home")}>
-				<Image source={images['fondoPrincipal']} className='h-full w-full' resizeMode='fit' />
-				<View className='bg-filer-grey2 opacity-80 w-full absolute h-full '>
-				</View>
-				<View className='w-full absolute h-full justify-start items-center py-2 px-7 opacity-100'>
-					<View className='h-1/4 w-full  items-center justify-center gap-y-1 '>
-						<Image source={images['filerLogo']} className='h-2/5 w-2/5' resizeMode='contain' />
-						<Text className='text-xl text-filer-blue font-black  md:text-xl'>TRANSFORMADO EL AIRE QUE RESPIRAS</Text>
-					</View>
-					<View className='h-1/4 w-full '>
-						<Text className='text-lg font-normal'>
-							En FILER somos distribuidores en México de filtros de aire <Text className="font-black">AAF® International</Text> en México. Contamos con ingenieros especializados para ayudarle a encontrar el producto o solución adecuado a sus requerimientos de filtración de aire para tanto par confort como para proceso.
-						</Text>
-					</View>
-					<View className='h-1/4 w-full  items-center justify-start gap-y-4  py-2'>
-						<Text className='text-xl text-black font-semibold  md:text-2xl'>American Air Filter International</Text>
-						<Image source={images['aafLogo']} className='h-2/5 w-2/5' resizeMode='contain' />
-						<Text className='text-xl text-red-700 font-black  md:text-xl'>BRINGING CLEAN AIR TO LIFE.</Text>
-					</View>
-					<View className='h-1/4 w-full items-center justify-between px-8 py-2 gap-y-10'>
-						<Text className='text-lg font-semibold mt-5'>
-							Presiona la pantalla para entrar a la app
-						</Text>
-						<Text className='text-lg font-normal'>
-							© 2025 American Air Filter Company, Inc. & Filer Hvac&r Solutions
-						</Text>
-					</View>
-				</View>
-			</TouchableOpacity>
-		</View>
-	)
+// --- NUEVAS IMPORTACIONES ---
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+export default function PantallaInicio({ setPantalla }) {
+  // --- OBTENER LOS INSETS ---
+  // Este hook nos da las medidas de las áreas seguras (top, bottom, left, right)
+  const insets = useSafeAreaInsets();
+
+  return (
+    // View principal que ocupa toda la pantalla
+    <View style={styles.fullScreenContainer}>
+      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+
+      {/* Capa 1: Imagen de fondo (ocupa toda la pantalla) */}
+      <Image 
+        source={images['fondoPrincipal']} 
+        style={styles.backgroundImage} 
+        resizeMode='cover'
+      />
+
+      {/* Capa 2: Superposición blanca (ocupa toda la pantalla) */}
+      <View style={styles.overlay} />
+
+      {/* Capa 3: Contenido. A este le aplicamos los insets como padding. */}
+      {/* Esto asegura que el contenido no se solape, pero el fondo sí. */}
+      <View 
+        style={[
+          styles.contentContainer,
+          { paddingTop: insets.top, paddingBottom: insets.bottom }
+        ]}
+      >
+        {/* Envolvemos el contenido en un TouchableOpacity para la acción de "entrar" */}
+        <TouchableOpacity 
+          style={styles.touchableContent}
+          activeOpacity={1} 
+          onPress={() => setPantalla("home")}
+        >
+          {/* Sección Superior */}
+          <View className='items-center w-full'>
+            <Image 
+              source={images['filerLogo']} 
+              className='h-24 w-56'
+              resizeMode='contain' 
+            />
+            <Text className='text-2xl text-filer-blue font-extrabold tracking-tight mt-2 text-center'>
+              TRANSFORMANDO EL AIRE QUE RESPIRAS
+            </Text>
+          </View>
+
+          {/* Sección Media */}
+          <View className='w-full px-4'>
+            <Text className='text-lg font-normal text-gray-800 leading-relaxed text-center'>
+              Somos distribuidores autorizados de filtros de aire <Text className="font-bold">AAF® International</Text> en México. Contamos con ingenieros especializados para ayudarle a encontrar la solución adecuada a sus requerimientos de filtración.
+            </Text>
+          </View>
+
+          {/* Sección Inferior */}
+          <View className='items-center w-full'>
+            <Text className='text-base text-black font-semibold mb-2'>
+              American Air Filter International
+            </Text>
+            <Image 
+              source={images['aafLogo']} 
+              className='h-16 w-40' 
+              resizeMode='contain' 
+            />
+            <Text className='text-base text-red-700 font-black tracking-wide mt-2'>
+              BRINGING CLEAN AIR TO LIFE.®
+            </Text>
+          </View>
+
+          {/* Footer */}
+          <View className='items-center w-full'>
+            <Text className='text-lg font-semibold'>
+              Toca para entrar
+            </Text>
+            <Text className='text-xs font-normal text-gray-600 mt-4'>
+              © 2025 AAF Company, Inc. & Filer Hvac&r Solutions
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  fullScreenContainer: {
+    flex: 1,
+	position: 'relative',
+  },
+  backgroundImage: {
+	...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.85)', 
+  },
+  contentContainer: {
+    flex: 1, // Ocupa todo el espacio disponible
+    paddingHorizontal: 20,
+    // El padding vertical se aplica dinámicamente con los insets
+  },
+  touchableContent: {
+    flex: 1, // El área táctil ocupa todo el espacio del contenedor de contenido
+    justifyContent: 'space-around', 
+    alignItems: 'center',
+  },
+});

@@ -12,7 +12,7 @@ export default function pantallaCotizacion() {
   const navigation = useNavigation();
   
   // Estado del carrito inicial (global.carrito)
-  const [carrito, setCarrito] = useState([...global.carrito]); // Clonamos global.carrito para manejar el estado local
+  const [carrito, setCarrito] = useState(global.carrito ? [...global.carrito] : []);// Clonamos global.carrito para manejar el estado local
 
   // Función para manejar la actualización del carrito
   const actualizarCarrito = (id, nuevaCantidad) => {

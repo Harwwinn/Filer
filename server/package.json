@@ -20,6 +20,8 @@
     "nodemailer": "^6.10.0",
     "qrcode-terminal": "^0.12.0",
     "twilio": "^5.5.1",
-    "whatsapp-web.js": "^1.27.0"
+    "whatsapp-web.js": "^1.27.0",
+    "expo-linking": "~7.1.5",
+    "react-native-safe-area-context": "5.4.0"
   }
 }

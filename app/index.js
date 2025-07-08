@@ -1,204 +1,246 @@
-import { View, Text, SafeAreaView, TextInput, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import '../global.css';
+import '../assets/carrito';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Feather from '@expo/vector-icons/Feather';
-import images from '../assets/images/images';
-import ContainerProducto from './components/containerProductoMainPage';
-import '../assets/carrito';
-import PantallaInicio from './pantallas/pantallaInicio';
-import Filters from './components/Filters';
 import { StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const categorias = require('../assets/categorias.json');
+
+// Tus componentes e importaciones
+import images from '../assets/images/images';
+// Nota: Ya no usamos ContainerProducto aquí, renderizamos las tarjetas directamente
+import PantallaInicio from './pantallas/pantallaInicio';
+
+// Carga de datos
+const categoriasData = require('../assets/categorias.json');
 const data = require('../assets/data.json');
 const productos = data.filtros;
 
-
-export default function index() {
+export default function Index() {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
+  
   const [pantalla, setPantalla] = useState('inicio');
-  const [mostrarCategorias, setMostrarCategorias] = useState(false);
-  const [filteredData, setFilteredData] = useState(productos);
+
+  const [selectionPath, setSelectionPath] = useState({
+    level1: null,
+    level2: null,
+  });
+
+  const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubCategory, setSelectedSubCategory] = useState("");
-  const [selectedSubSubCategory, setSelectedSubSubCategory] = useState("");
-  const [subcategories, setSubcategories] = useState([]);
-  const [subSubCategories, setSubSubCategories] = useState([]);
 
-  const filterFiltros = () => {
-    let filtered = [...productos];
-    const termino = searchTerm.toLowerCase();
-    if (searchTerm) {
-      filtered = filtered.filter(producto => producto.nombre.toLowerCase().includes(termino));
-    }
-    if (selectedCategory) {
-      filtered = filtered.filter(producto => producto.categoria1 === selectedCategory);
-    }
+  const ALLOWED_LEVEL1 = "HVAC Filtration";
+  const ALLOWED_LEVEL2 = "Planos";
 
-    if (selectedSubCategory) {
-      filtered = filtered.filter(producto => producto.categoria2 === selectedSubCategory);
-    }
-
-    if (selectedSubSubCategory) {
-      filtered = filtered.filter(producto => producto.categoria3 === selectedSubSubCategory);
-    }
-
-    setFilteredData(filtered);
-  }
-
+  // Efecto para filtrar los productos
   useEffect(() => {
-    filterFiltros();
-  }, [selectedCategory, selectedSubCategory, selectedSubSubCategory, searchTerm]);
+    let results = [];
+    const termino = searchTerm.toLowerCase();
 
-  const handleCategoryPress = (category) => {
-    if (selectedCategory === category) {
-      setSelectedCategory("");
-      setSelectedSubCategory("");
-      setSelectedSubSubCategory("");
-      setSubcategories([]);
-      setSubSubCategories([]);
-    } else {
-      setSelectedCategory(category);
-      setSelectedSubCategory("");
-      setSelectedSubSubCategory("");
-      setSubcategories(Object.keys(categorias[category] || {}));
-      setSubSubCategories([]);
+    // Lógica de filtrado basado en la navegación
+    if (selectionPath.level2 === 'Planos') {
+      results = productos.filter(p => p.categoria1 === selectionPath.level1 && p.categoria2 === selectionPath.level2);
+    }
+    
+    // Lógica de búsqueda por texto. Filtra los resultados actuales o toda la lista de productos
+    if (searchTerm) {
+      const sourceData = results.length > 0 ? results : productos;
+      results = sourceData.filter(producto => 
+        producto.nombre.toLowerCase().includes(termino) ||
+        producto.categoria3?.toLowerCase().includes(termino) // Busca también en sub-subcategoría si existe
+      );
     }
 
-    filterFiltros();
+    setFilteredData(results);
+
+  }, [selectionPath, searchTerm]);
+
+
+  const handleLevel1Select = (category) => {
+    if (category === ALLOWED_LEVEL1) {
+      setSearchTerm(""); // Limpiar búsqueda al navegar
+      setSelectionPath({ level1: category, level2: null });
+    }
   };
 
-  const handleSubCategoryPress = (subCategory) => {
-    if (selectedSubCategory === subCategory) {
-      setSelectedSubCategory("");
-      setSelectedSubSubCategory("");
-      setSubSubCategories([]);
-    } else {
-      setSelectedSubCategory(subCategory);
-      setSelectedSubSubCategory("");
-      setSubSubCategories(Object.keys(categorias[selectedCategory]?.[subCategory] || {}));
+  const handleLevel2Select = (subCategory) => {
+    if (subCategory === ALLOWED_LEVEL2) {
+      setSearchTerm(""); // Limpiar búsqueda al navegar
+      setSelectionPath({ ...selectionPath, level2: subCategory });
     }
-    filterFiltros();
+  };
+  
+  const goBack = () => {
+    setSearchTerm(""); // Limpiar búsqueda al retroceder
+    if (selectionPath.level2) {
+      setSelectionPath({ ...selectionPath, level2: null });
+    } else if (selectionPath.level1) {
+      setSelectionPath({ level1: null, level2: null });
+    }
   };
 
-  const handleSubSubCategoryPress = (subCategory) => {
-    if (selectedSubSubCategory === subCategory) {
-      setSelectedSubSubCategory("");
-    } else {
-      setSelectedSubSubCategory(subCategory);
+  // --- Renderizado Condicional ---
+  const renderContent = () => {
+    // Si hay un término de búsqueda, mostramos los resultados de la búsqueda
+    if (searchTerm && filteredData.length > 0) {
+      return (
+        <ScrollView contentContainerStyle={{ padding: 16 }}>
+          <Text className="text-lg text-gray-600 mb-4 px-2">Resultados de la búsqueda para "{searchTerm}":</Text>
+          {filteredData.map((item, index) => (
+            <TouchableOpacity
+              key={index.toString()}
+              onPress={() => navigation.navigate('pantallaProducto', { item })}
+              className="bg-white rounded-lg shadow-md p-4 mb-4 border border-gray-200"
+            >
+              <View className="flex-row items-center">
+                <Image source={images[item.imagen]} className="w-24 h-24 mr-4 rounded-md" />
+                <View className="flex-1">
+                  <Text className="text-lg font-bold text-filer-blue">{item.nombre}</Text>
+                  <Text className="text-sm text-gray-600 mt-1">{item.descripcion_breve}</Text>
+                  <Text className="text-xs text-gray-400 mt-2">
+                    {item.categoria1} {' > '} {item.categoria2} {' > '} {item.categoria3}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      );
     }
-    filterFiltros();
+
+    // Nivel 3: Mostrar la lista de productos de la categoría "Planos"
+    if (selectionPath.level2 === 'Planos') {
+      return (
+        <ScrollView contentContainerStyle={{ padding: 16 }}>
+          {filteredData.map((item, index) => (
+            <TouchableOpacity
+              key={index.toString()}
+              onPress={() => navigation.navigate('pantallaProducto', { item })}
+              className="bg-white rounded-lg shadow-md p-4 mb-4 border border-gray-200"
+            >
+              <View className="flex-row items-center">
+                <Image source={images[item.imagen]} className="w-24 h-24 mr-4 rounded-md" />
+                <View className="flex-1">
+                  <Text className="text-lg font-bold text-filer-blue">{item.nombre}</Text>
+                  <Text className="text-sm text-gray-600 mt-1">{item.descripcion_breve}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      );
+    }
+
+    // Nivel 2: Mostrar subcategorías (Planos, Pleated, etc.)
+    if (selectionPath.level1) {
+      const subCategories = categoriasData[selectionPath.level1];
+      return (
+        <ScrollView contentContainerStyle={{ padding: 16 }}>
+          {Object.keys(subCategories).map((subCategory) => {
+            const isAllowed = subCategory === ALLOWED_LEVEL2;
+            const item = subCategories[subCategory];
+            return (
+              <TouchableOpacity
+                key={subCategory}
+                disabled={!isAllowed}
+                onPress={() => handleLevel2Select(subCategory)}
+                className={`bg-white rounded-lg shadow-md p-4 mb-4 border border-gray-200 ${!isAllowed && 'opacity-40'}`}
+              >
+                <View className="flex-row items-center">
+                  <Image source={images[item.imagen]} className="w-24 h-24 mr-4 rounded-md" />
+                  <View className="flex-1">
+                    <Text className="text-lg font-bold text-filer-blue">{subCategory}</Text>
+                    <Text className="text-sm text-gray-600 mt-1">{item.descripcion}</Text>
+                  </View>
+                   {!isAllowed && (
+                      <View className="absolute top-2 right-2">
+                          <FontAwesome6 name="lock" size={20} color="#6b7280" />
+                      </View>
+                  )}
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      );
+    }
+
+    // *** CAMBIO CLAVE ***
+    // Nivel 1: Mostrar categorías principales con layout vertical a pantalla completa
+    return (
+        <View className="flex-1 justify-around p-4">
+            {Object.keys(categoriasData).map((category) => {
+                const isAllowed = category === ALLOWED_LEVEL1;
+                return (
+                    <TouchableOpacity
+                        key={category}
+                        disabled={!isAllowed}
+                        onPress={() => handleLevel1Select(category)}
+                        // flex-1 hace que cada botón intente ocupar el mismo espacio vertical
+                        className={`flex-1 justify-center items-center bg-white rounded-lg shadow-md m-2 border-2 ${isAllowed ? 'border-filer-blue' : 'border-gray-300'} ${!isAllowed && 'opacity-40'}`}
+                    >
+                        <Text className={`text-xl font-bold ${isAllowed ? 'text-filer-blue' : 'text-gray-500'}`}>{category}</Text>
+                        {!isAllowed && <FontAwesome6 name="lock" size={24} color="#6b7280" className="mt-2" />}
+                    </TouchableOpacity>
+                );
+            })}
+        </View>
+    );
   };
+
 
   return (
-    <SafeAreaView className='min-h-screen'>
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      {pantalla == "inicio" ? <PantallaInicio setPantalla={setPantalla} />
-        :
-        <ScrollView>
-          <View className="bg-white text-xl min-h-screen">
-            <View className="relative z-10 bg-white min-h-28 items-center justify-end py-2">
-              {/* Botón ver lista */}
-              <View className="bg-white h-15 justify-end items-center">
-                <TouchableOpacity className='w-full flex flex-row justify-end items-center mr-10 mb-2' onPress={() => navigation.navigate('pantallaCotizacion')}>
-                  <Text className='text-right text-xl mr-1 text-filer-blue'>Ver Lista</Text>
+    <>
+      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+      <SafeAreaView className="flex-1 bg-white" edges={['left', 'right']}>
+        {pantalla === "inicio" ? (
+          <View className="flex-1">
+            <PantallaInicio setPantalla={setPantalla} />
+          </View>
+        ) : (
+          <View className="flex-1">
+            {/* HEADER */}
+            <View className="bg-white items-center justify-end py-2 border-b border-gray-200"
+  style={{ paddingTop: insets.top }}>
+              <View className="w-full flex-row justify-between items-center px-4 mb-2">
+                {selectionPath.level1 && (
+                  <TouchableOpacity onPress={goBack} className="flex-row items-center">
+                    <Feather name="chevron-left" size={24} color="#0077bf" />
+                    <Text className="text-lg text-filer-blue ml-1">Volver</Text>
+                  </TouchableOpacity>
+                )}
+                {!selectionPath.level1 && <View />}
+                <TouchableOpacity className='flex-row justify-end items-center' onPress={() => navigation.navigate('pantallaCotizacion')}>
+                  <Text className='text-right text-lg mr-1 text-filer-blue'>Ver Lista</Text>
                   <Feather name="wind" size={24} color="#0077bf" />
                 </TouchableOpacity>
               </View>
 
-              {/* Botón de búsqueda */}
-              <View className='border-gray-800 w-11/12  h-11 rounded-xl relative z-20 flex flex-row justify-center items-center bg-filer-blue2'>
-                <TextInput className='text-sm w-11/12 text-black' value={searchTerm} onChangeText={(text) => setSearchTerm(text)} placeholder='Escribe el modelo del filtro'/>
-                <FontAwesome6 name="magnifying-glass" size={24} color="#0077bf" className="w-1/12 " />
-              </View>
-
-              {/* Filtrar por categoría */}
-              <View className="w-full h-12 flex flex-row justify-end items-center pr-5">
-                <TouchableOpacity className="flex flex-row items-center" onPress={() => setMostrarCategorias(!mostrarCategorias)}>
-                  <Text className="text-xl mr-1 text-filer-blue">Filtrar por categoría</Text>
-                  <Feather name="sliders" size={24} color="#0077bf" />
-                </TouchableOpacity>
+              {/* BUSCADOR */}
+              <View className='border-gray-800 w-11/12 h-11 rounded-xl relative flex-row items-center bg-gray-100 mt-2'>
+                <TextInput
+                  className='text-sm w-10/12 text-black pl-4'
+                  value={searchTerm}
+                  onChangeText={setSearchTerm}
+                  placeholderTextColor="#0077bf"
+                  placeholder='Busca un filtro por nombre o modelo...'
+                />
+                <FontAwesome6 name="magnifying-glass" size={20} color="#0077bf" className="absolute right-4" />
               </View>
             </View>
-            {mostrarCategorias &&
-              <View className="w-full pt-1 pb-2 px-6 border-b-filer-blue2 border-b-2">
-                <Text className="text-xl text-filer-blue">Linea</Text>
-                <View className="w-full flex-row gap-x-2 gap-y-2 flex-wrap py-2">
-                  {Object.keys(categorias).map((category) => (
-                    <TouchableOpacity
-                      key={category}
-                      className={`border-filer-blue border-2 p-1 rounded-full ${selectedCategory === category && 'bg-filer-blue'}`}
-                      onPress={() => handleCategoryPress(category)}
-                    >
-                      <Text className={`text-base ${selectedCategory === category ? 'text-white' : 'text-black'} `}> {category} </Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-                {subcategories.length > 0 && (
-                  <>
-                    <Text className="text-xl text-filer-blue">Subcategorías de {selectedCategory}</Text>
-                    <View className="w-full flex-row gap-x-2 gap-y-2 flex-wrap py-2">
-                      {subcategories.map((subcategory) => (
-                        <TouchableOpacity
-                          key={subcategory}
-                          className={`border-filer-blue border-2 p-1 rounded-full ${selectedSubCategory === subcategory && 'bg-filer-blue'}`}
-                          onPress={() => handleSubCategoryPress(subcategory)}
-                        >
-                          <Text className={`text-base ${selectedSubCategory === subcategory ? 'text-white' : 'text-black'} `}> {subcategory} </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  </>
-                )}
 
-                {subSubCategories.length > 0 && (
-                  <>
-                    <Text className="text-xl text-filer-blue">Subcategorías de {selectedSubCategory}</Text>
-                    <View className="w-full flex-row gap-x-2 gap-y-2 flex-wrap py-2">
-                      {subSubCategories.map((subcategory) => (
-                        <TouchableOpacity
-                          key={subcategory}
-                          className={`border-filer-blue border-2 p-1 rounded-full ${selectedSubSubCategory === subcategory && 'bg-filer-blue'}`}
-                          onPress={() => handleSubSubCategoryPress(subcategory)}
-                        >
-                          <Text className={`text-base ${selectedSubSubCategory === subcategory ? 'text-white' : 'text-black'} `}> {subcategory} </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  </>
-                )}
-
-
-              </View>}
-            {/*<FlatList className="w-full flex-1 p-5" data={filteredData} keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => (
-                <ContainerProducto
-                  titulo={item.nombre}
-                  overview={item.overview}
-                  imagen={images[item.imagen]}
-                  onPress={() => navigation.navigate('pantallaProducto', { item })}
-                />
-              )}
-            />*/}
-            <View className="w-full flex-1 p-5">
-              {filteredData.map((item, index) => (
-                <ContainerProducto
-                  key={index.toString()} // Asigna una clave única
-                  titulo={item.nombre}
-                  overview={item.overview}
-                  imagen={images[item.imagen]}
-                  onPress={() => navigation.navigate('pantallaProducto', { item })}
-                />
-              ))}
+            {/* CONTENIDO DINÁMICO */}
+            <View className="flex-1">
+              {renderContent()}
             </View>
-
           </View>
-        </ScrollView>
-      }
-    </SafeAreaView>
-
-  )
+        )}
+      </SafeAreaView>
+    </>
+  );
 }

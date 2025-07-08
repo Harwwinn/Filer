@@ -86,6 +86,9 @@
       "id": 4,
       "nombre": "Permanent Metal Air Filters",
       "imagen": "permanent_metal_air_filters",
+      "imagen_specs": "permanent_metal_air_filters_specs",
+      "ficha_tecnica_url": "https://firebasestorage.googleapis.com/v0/b/fichas-tecnicas-filer.firebasestorage.app/o/fichas-tecnicas%2FPermanent%20Metal_data_sheet_AFP%201%20209B%20new.pdf?alt=media&token=72a179bf-0cfe-4fe9-b30c-3018d816a17c",
+      "descripcion_breve": "Estos filtros metálicos permanentes son lavables, reutilizables y livianos. También son una excelente primera línea de defensa en condiciones de alta humedad y alta temperatura.",
       "overview": [
           "• Low maintenance",
           "• Ideally suited for high moisture and high temperature conditions (Up to 350°F)",
